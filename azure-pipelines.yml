@@ -32,8 +32,12 @@ steps:
   inputs:
     command: test
     projects: '**/*/*Test.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-- task: VSTest@2
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+- task: PublishCodeCoverageResults@1
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
+    summaryFileLocation: $(System.DefaultWorkingDirectory)/PerchedPeacockUnitTest/coverage.json   
+    #pathToSources: # Optional
+    #reportDirectory: # Optional
+    #additionalCodeCoverageFiles: # Optional
+    #failIfCoverageEmpty: false # Optional
