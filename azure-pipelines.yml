@@ -36,7 +36,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
-    summaryFileLocation: $(System.DefaultWorkingDirectory)/PerchedPeacockUnitTest/coverage.json   
+    summaryFileLocation: $(System.DefaultWorkingDirectory)/source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/coverage.cobertura.xml  
     #pathToSources: # Optional
     #reportDirectory: # Optional
     #additionalCodeCoverageFiles: # Optional
