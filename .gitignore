@@ -7,3 +7,5 @@
 /source/PerchedPeacockWebApplicationSln/.vs/PerchedPeacockWebApplicationSln
 /source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/bin/Debug/netcoreapp3.0
 /source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/obj
+/source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/bin/x64/Debug/netcoreapp3.0
+/source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/coverage.json
