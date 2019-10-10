@@ -3,3 +3,7 @@
 ################################################################################
 
 /source/PerchedPeacockWebApplicationSln/.vs/PerchedPeacockWebApplicationSln/v16/Server/sqlite3
+/source/PerchedPeacockWebApplicationSln/PerchedPeacockWebApplication/.gitignore
+/source/PerchedPeacockWebApplicationSln/.vs/PerchedPeacockWebApplicationSln
+/source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/bin/Debug/netcoreapp3.0
+/source/PerchedPeacockWebApplicationSln/PerchedPeacockUnitTest/obj
