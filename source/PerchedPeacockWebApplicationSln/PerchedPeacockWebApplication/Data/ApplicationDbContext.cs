@@ -17,5 +17,6 @@ namespace PerchedPeacockWebApplication.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<PerchedPeacockWebApplication.Models.ParkingLot> ParkingLot { get; set; }
     }
 }
