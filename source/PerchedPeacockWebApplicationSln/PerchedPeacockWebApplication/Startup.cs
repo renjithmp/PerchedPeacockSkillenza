@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 
 namespace PerchedPeacockWebApplication
 {
@@ -50,7 +51,34 @@ namespace PerchedPeacockWebApplication
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Perched Peacock API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Perched Peacock API", Version = "v1" });                
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Implicit = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("/auth-server/connect/authorize", UriKind.Relative),                           
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "readAccess", "Access read operations" },
+                                { "writeAccess", "Access write operations" }
+                            }
+                        }
+                    }
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                        },
+                        new[] { "readAccess", "writeAccess" }
+                    }
+                });
             });
             //  services.AddSwaggerGen();
         }
