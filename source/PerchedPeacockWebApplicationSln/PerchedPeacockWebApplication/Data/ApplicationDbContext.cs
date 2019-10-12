@@ -18,5 +18,7 @@ namespace PerchedPeacockWebApplication.Data
         {
         }
         public DbSet<PerchedPeacockWebApplication.Models.ParkingLot> ParkingLot { get; set; }
+        public DbSet<PerchedPeacockWebApplication.Models.Booking> Booking { get; set; }
+        public DbSet<PerchedPeacockWebApplication.Models.Location> Location { get; set; }
     }
 }

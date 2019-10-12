@@ -10,12 +10,13 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System;
+using PerchedPeacockWebApplication.Utility;
 
 namespace PerchedPeacockUnitTest
 {
-    class BookingUnitTest
+    public class BookingUnitTest
     {
-
+        [Fact]
         public async System.Threading.Tasks.Task TestFindFreeSlotsAsync()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -39,18 +40,18 @@ namespace PerchedPeacockUnitTest
                 // Run the test against one instance of the context
                 using (var context = new ApplicationDbContext(options, iOptionsMock))
                 {
-                   
+
                     var parkingLotController = new ParkingLotsController(context);
                     ParkingLot newParkingLot = new ParkingLot() { ParkingDisplayName = "TestPL", LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
                     await parkingLotController.PostParkingLot(newParkingLot);
                     context.SaveChanges();
 
 
-                    BookingController bookingController = new BookingController(context);
+                    BookingsController bookingController = new BookingsController(context);
                     var location = new Location() { LocationLocality = "Whitefield", LocationBuilding = "TestBuilding" };
-                    List<ParkingLot> parkingLots=bookingController.GetFreeParkingSlots(location);
+                    var parkingLots = bookingController.GetFreeParkingSlots(location);
 
-                    Assert.Equal(1, parkingLots.Count);
+                    Assert.Single(parkingLots.Value);
                 }
             }
             finally
@@ -58,7 +59,7 @@ namespace PerchedPeacockUnitTest
                 connection.Close();
             }
         }
-
+        [Fact]
         public async System.Threading.Tasks.Task TestFindAllFreeSlotsAsync()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -89,11 +90,11 @@ namespace PerchedPeacockUnitTest
                     context.SaveChanges();
 
 
-                    BookingController bookingController = new BookingController(context);
+                    BookingsController bookingController = new BookingsController(context);
                     var location = new Location() { LocationLocality = "Whitefield", LocationBuilding = "TestBuilding" };
-                    List<ParkingLot> parkingLots = bookingController.GetAllFreeParkingSlots(location);
+                    List<ParkingLot> parkingLots = bookingController.GetAllFreeParkingSlots();
 
-                    Assert.Equal(1, parkingLots.Count);
+                    Assert.Single(parkingLots);
                 }
             }
             finally
@@ -101,6 +102,7 @@ namespace PerchedPeacockUnitTest
                 connection.Close();
             }
         }
+        [Fact]
         public async System.Threading.Tasks.Task TestBookingASlot()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -126,17 +128,21 @@ namespace PerchedPeacockUnitTest
                 {
 
                     var parkingLotController = new ParkingLotsController(context);
+                    var locationController = new LocationsController(context);
+                    Location location = new Location() { LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
+                    await locationController.PostLocation(location);
+
                     ParkingLot newParkingLot = new ParkingLot() { ParkingDisplayName = "TestPL", LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
                     await parkingLotController.PostParkingLot(newParkingLot);
+
+
+
+                    BookingsController bookingController = new BookingsController(context);
+                    await bookingController.PostBooking(newParkingLot.Id);
                     context.SaveChanges();
+                    var booking = bookingController.GetBooking(1);
 
-
-                    BookingController bookingController = new BookingController(context);
-                    var location = new Location() { Id=1 LocationLocality = "Whitefield", LocationBuilding = "TestBuilding" };
-                    var booking = new Booking() { LocationId = location.Id, InTime = DateTime.Now, OutTime = null, IsOccupied = true, ParkingLotId = newParkingLot.Id };
-                    List<ParkingLot> parkingLots = bookingController.GetFreeParkingSlots(location);
-
-                    Assert.Equal(1, parkingLots.Count);
+                    Assert.True(booking.Result.Value.IsOccupied == true);
                 }
             }
             finally
@@ -144,15 +150,14 @@ namespace PerchedPeacockUnitTest
                 connection.Close();
             }
         }
-
+        [Fact]
         public void TestCalculateBookingCharge()
         {
-            BookingUtility bookingUtility = new BookingUtility();
-            int bookingCharge=bookingUtility.CalculateBookingCharge(DateTime.Now.AddHours(-2), DateTime.Now, 50);
+            int bookingCharge = BookingUtility.CalculateBookingCharge(DateTime.Now.AddHours(-2), DateTime.Now, 50);
             Assert.Equal(100, bookingCharge);
-            
-        }
 
+        }
+        [Fact]
         public async System.Threading.Tasks.Task TestClosingABooking()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -176,11 +181,21 @@ namespace PerchedPeacockUnitTest
                 // Run the test against one instance of the context
                 using (var context = new ApplicationDbContext(options, iOptionsMock))
                 {
-                    var bookingController = new BookingController(context);
-                    await TestBookingASlot();
-                  bookingController.closeBooking(1);
-                    Booking booking = bookingController.getBooking(1);
-                    Assert.True(booking.IsOccupied==false);
+                    var bookingController = new BookingsController(context);
+                    var locationController = new LocationsController(context);
+                    var parkingLotController = new ParkingLotsController(context);
+
+                    Location location = new Location() { LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
+                    await locationController.PostLocation(location);
+                    ParkingLot newParkingLot = new ParkingLot() { ParkingDisplayName = "TestPL", LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
+                    await parkingLotController.PostParkingLot(newParkingLot);
+                    context.SaveChanges();
+                    await bookingController.PostBooking(1);
+                    context.SaveChanges();
+                    bookingController.CloseBooking(1);
+                    context.SaveChanges();
+                    var booking = await bookingController.GetBooking(1);
+                    Assert.True(booking.Value.IsOccupied == false);
                 }
             }
             finally
@@ -188,7 +203,7 @@ namespace PerchedPeacockUnitTest
                 connection.Close();
             }
         }
-
+        [Fact]
         public async System.Threading.Tasks.Task TestFindAllBookings()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -212,10 +227,20 @@ namespace PerchedPeacockUnitTest
                 // Run the test against one instance of the context
                 using (var context = new ApplicationDbContext(options, iOptionsMock))
                 {
-                    var bookingController = new BookingController(context);
-                    await TestBookingASlot();                    
-                    List<Booking> bookings = bookingController.FindAllBookings();
-                    Assert.Equal(1, bookings.Count);
+                    var bookingController = new BookingsController(context);
+                    var locationController = new LocationsController(context);
+                    var parkingLotController = new ParkingLotsController(context);
+
+                    Location location = new Location() { LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
+                    await locationController.PostLocation(location);
+                    ParkingLot newParkingLot = new ParkingLot() { ParkingDisplayName = "TestPL", LocationLocality = "Whitefield", LocationBuilding = "TestBuilding", LocationCity = "Bangalore", LocationPinCode = 560000 };
+                    await parkingLotController.PostParkingLot(newParkingLot);
+                    context.SaveChanges();
+                    await bookingController.PostBooking(1);
+                    context.SaveChanges();
+                    bool includeOpenBookings = true;
+                    var bookings = await bookingController.GetBooking(includeOpenBookings);
+                    Assert.Single(bookings.Value);
                 }
             }
             finally
