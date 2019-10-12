@@ -28,6 +28,8 @@ namespace PerchedPeacockWebApplication.Controllers
             return await _context.Booking.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("FreeParkingSlots")]
         public ActionResult<IEnumerable<ParkingLot>> GetFreeParkingSlots(Location location)
         {
             var allFreeSlots = GetAllFreeParkingSlots();
@@ -61,34 +63,35 @@ namespace PerchedPeacockWebApplication.Controllers
         // PUT: api/Bookings/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBooking(int id, Booking booking)
-        {
-            if (id != booking.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //[Route("api/[controller]/updateBooking")]
+        //public async Task<IActionResult> PutBooking(int id, Booking booking)
+        //{
+        //    if (id != booking.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(booking).State = EntityState.Modified;
+        //    _context.Entry(booking).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookingExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!BookingExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/Bookings
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -131,6 +134,8 @@ namespace PerchedPeacockWebApplication.Controllers
             return booking;
         }
 
+        [HttpGet]
+        [Route("AllFreeParkingSlots")]
         public List<ParkingLot> GetAllFreeParkingSlots()
         {
             var allBookings = GetBooking();
@@ -161,6 +166,8 @@ namespace PerchedPeacockWebApplication.Controllers
             return _context.Booking.Any(e => e.Id == id);
         }
 
+        [HttpPut]
+        [Route("CloseBooking/{id}")]
         public void CloseBooking(int bookingId)
         {
           var booking=  _context.Booking.Single(booking => booking.Id == bookingId);
