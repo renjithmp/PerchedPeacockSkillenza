@@ -1,9 +1,11 @@
 <h1 id="tableLabel">Find Available Parking Slots</h1>
 <br/>
-<div class="container">
+<div id="adminGrid" class="ag-theme-balham-dark">
   <ag-grid-angular style="width: 700px; height: 500px;"
+                   [gridOptions]="bookingGridOptions"
                    class="ag-theme-balham"
-                   [rowData]="rowData"
-                   [columnDefs]="columnDefs">
+                   [rowData]="rowData | async"
+                   [columnDefs]="columnDefs"
+                   (cellClicked)="onBookingCellClicked($event)">
   </ag-grid-angular>
 </div>

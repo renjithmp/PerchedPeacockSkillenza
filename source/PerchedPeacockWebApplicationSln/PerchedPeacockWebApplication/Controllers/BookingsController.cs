@@ -138,13 +138,14 @@ namespace PerchedPeacockWebApplication.Controllers
         [Route("AllFreeParkingSlots")]
         public List<ParkingLot> GetAllFreeParkingSlots()
         {
-            var allBookings = GetBooking();
+            var allBookings = GetBooking().Result;
+           // _context.SaveChanges();
             var freeSlots = new List<ParkingLot>();
             var allbookingLots = _context.ParkingLot.ToList();
             foreach (ParkingLot parkingLot in allbookingLots)
             {
                 bool bookingFound = false;
-                foreach (Booking booking in allBookings.Result.Value)
+                foreach (Booking booking in allBookings.Value)
                 {
                     if (booking.ParkingLotId == parkingLot.Id)
                     {
