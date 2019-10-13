@@ -60,10 +60,10 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
     # do this near the end of your pipeline in most cases
-- task: NuGetCommand@2
-  inputs:
-    command: pack
-    packagesToPack: '**/*/PerchedPeacockWebApplication.csproj'
+#- task: NuGetCommand@2
+ # inputs:
+  #  command: pack
+  #  packagesToPack: '**/*/PerchedPeacockWebApplication.csproj'
     
  # define version variable elsewhere in your pipeline
 - task: NuGetCommand@2
