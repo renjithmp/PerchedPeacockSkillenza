@@ -31,7 +31,10 @@
      1. PerchedPeacockWebApplication.csproj 
         This project contains the rest api's and business logic for the perched peacock application
         The project has a folder called ClientApp. This folder contains the front end part of the application
-        
+     2. PerchedPeacockUnitTest.csproj 
+        The project contains the unit tests for the project. Please note the unit test are written with the help of sqllite in memory database. 
+     3.azure-pipelines.yml 
+        CI/CD pipeline components
         
   ## API Design 
       Controllers 
