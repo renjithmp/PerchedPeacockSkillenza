@@ -5,7 +5,7 @@ Full Stack Application for a parking lot solution company. The Application autom
 
   | Front End | Service Layer | Database| 
   |-----------|:-------------:|:--------|
-  | Angular 7  | Asp.net Core 3 Web API|SQLLite Database |  
+  | Angular 8  | Asp.net Core 3 Web API|SQLLite Database |  
   
  ## Prerequisite 
   Developer should have below softwares installed on the dev server to execute this project <br/>
@@ -25,5 +25,28 @@ Full Stack Application for a parking lot solution company. The Application autom
       * Swashbuckle.AspNetCore.SwaggerUI: an embedded version of the Swagger UI tool. It interprets Swagger JSON to build a rich, customizable        experience for describing the web API functionality. It includes built-in test harnesses for the public methods.
    
   ## Project Implementation details 
-   
+   ![](PerchedPeacockArc.JPG)
+  
+  ## Solution Key items
+     1. PerchedPeacockWebApplication.csproj 
+        This project contains the rest api's and business logic for the perched peacock application
+        The project has a folder called ClientApp. This folder contains the front end part of the application
+        
+        
+  ## API Design 
+      Controllers 
+      1.  Bookings controller - The booking controller has the methods for managing parking lot bookings. Key operations are Post a booking, find free slots and get booking. 
+      2.  Parking lot controller - The parking lot controller will take care of managing parking lot referential. key operations are adding a parking lot and removing a parking lot. 
+      3.  location controller - The location controller is a referential for all parking lot locations. 
+      
+   ## CI/ CD
+     Builds - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build?definitionId=1 
+     
+     Test reports - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build/results?buildId=9&view=ms.vss-test-web.build-test-results-tab
+     
+     Code coverage - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build/results?buildId=9&view=codecoverage-tab 
+     
+     Release pipeline - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_releaseProgress?_a=release-pipeline-progress&releaseId=9
+     
+ #### Dotnet core 3 supported regions in Azure cloud
 https://aspnetcoreon.azurewebsites.net/#ASP.NET%20Core%20Module
