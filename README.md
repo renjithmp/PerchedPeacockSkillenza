@@ -25,7 +25,7 @@
       * Swashbuckle.AspNetCore.SwaggerUI: an embedded version of the Swagger UI tool. It interprets Swagger JSON to build a rich, customizable        experience for describing the web API functionality. It includes built-in test harnesses for the public methods.
    
   ## Project Implementation details 
-   ![](PerchedPeacockArc.JPG)
+  ![](PerchedPeacockArc.JPG)
   
   ## Solution Key items
      1. PerchedPeacockWebApplication.csproj 
@@ -38,7 +38,7 @@
       1.  Bookings controller - The booking controller has the methods for managing parking lot bookings. Key operations are Post a booking, find free slots and get booking. 
       2.  Parking lot controller - The parking lot controller will take care of managing parking lot referential. key operations are adding a parking lot and removing a parking lot. 
       3.  location controller - The location controller is a referential for all parking lot locations. 
-      
+ ![](service_quick_ref.JPG) 
    # CI/ CD
    Builds 
    https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build?definitionId=1 
