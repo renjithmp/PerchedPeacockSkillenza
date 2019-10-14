@@ -1,5 +1,5 @@
 # PerchedPeacockSkillenza
-Full Stack Application for a parking lot solution company. The Application automates various operations such as finding a free parking , booking a parking slot etc.
+  An end to end application for a parking solution company. The applications provides a secured and scalable solution for a parking solution provider. The key features of this application are finding a free parking and keep track of booking history. It is easily extensible to include features such as payment gateways and third party oAuth logins. The application is built using the latest cutting edge technologies available in the market.  It is cloud friendly and can be easily deployed in any public clouds such as azure and aws. A complete CI/CD pipeline is also attached to the solution.  
 
 # Technical Stack
 
