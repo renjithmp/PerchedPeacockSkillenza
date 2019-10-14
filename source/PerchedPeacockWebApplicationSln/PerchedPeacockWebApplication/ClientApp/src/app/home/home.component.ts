@@ -67,8 +67,11 @@ export class HomeComponent {
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private _snackBar: MatSnackBar) {
 
     }
-
+    onFirstDataRendered(params) {
+        params.api.sizeColumnsToFit();
+    }
     ngOnInit() {
+        
         this.rowData = this.http.get(this.baseUrl + "api/Bookings/AllFreeParkingSlots");
     }
 }

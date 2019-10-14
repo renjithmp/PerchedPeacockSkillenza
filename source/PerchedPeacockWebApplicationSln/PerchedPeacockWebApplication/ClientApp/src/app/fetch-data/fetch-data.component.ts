@@ -23,7 +23,9 @@ export class FetchDataComponent implements OnInit {
     //ngOnInit() {
     //    this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
     //}
-
+    onFirstDataRendered(params) {
+        params.api.sizeColumnsToFit();
+    }
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     }
