@@ -39,14 +39,23 @@
       2.  Parking lot controller - The parking lot controller will take care of managing parking lot referential. key operations are adding a parking lot and removing a parking lot. 
       3.  location controller - The location controller is a referential for all parking lot locations. 
       
-   ## CI/ CD
-     Builds - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build?definitionId=1 
+   # CI/ CD
+   Builds 
+   https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build?definitionId=1 
      
-     Test reports - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build/results?buildId=9&view=ms.vss-test-web.build-test-results-tab
+  Test reports
+  https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build/results?buildId=9&view=ms.vss-test-web.build-test-results-tab
      
-     Code coverage - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build/results?buildId=9&view=codecoverage-tab 
+  Code coverage 
+  https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_build/results?buildId=9&view=codecoverage-tab 
      
-     Release pipeline - https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_releaseProgress?_a=release-pipeline-progress&releaseId=9
+  Release pipeline
+  https://dev.azure.com/remyarajan843/PerchedPeacokNewProj/_releaseProgress?_a=release-pipeline-progress&releaseId=9
      
- #### Dotnet core 3 supported regions in Azure cloud
-https://aspnetcoreon.azurewebsites.net/#ASP.NET%20Core%20Module
+  nuget
+  https://www.nuget.org/packages/PerchedPeacockWebApplication/
+  
+  # Deployment 
+  The application can be deployed in windows/ linux server. 
+   The system should have Node 10.9, Npm 6 + and dotnet core 3.0 runtime. As of now azure and aws cloud has partial support for dot net core.   https://aspnetcoreon.azurewebsites.net/#ASP.NET%20Core%20Module 
+A deployement is pushed to https://renjithperchedpeacock.azurewebsites.net . Waiting for Azure support for dotnet core 3. 
